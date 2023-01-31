@@ -1,0 +1,235 @@
+1.using System;
+
+namespace StudentProject
+{
+    abstract class Student
+    {
+        public string Name;
+        public int StudetnId;
+        public float Grade;
+        public abstract bool IsPassed(float Grade);
+    }
+    class Undergraduate : Student
+    {
+        public override bool IsPassed(float Grade)
+        {
+            Console.WriteLine("student id : "+this.StudetnId);
+            Console.WriteLine("student name : "+this.Name);
+            return Grade > 70 ? true : false;
+        }
+    }
+    class Graduate : Student
+    {
+        public override bool IsPassed(float Grade)
+        {
+            Console.WriteLine("student id : " + this.StudetnId);
+            Console.WriteLine("student name : " + this.Name);
+            return Grade > 80 ? true : false;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Student s;
+            int ch;
+            do
+            {
+                Console.WriteLine("1. UnderGraduate : ");
+                Console.WriteLine("2. Graduate : ");
+                Console.WriteLine("3. Exit");
+                ch = int.Parse(Console.ReadLine());
+                switch (ch)
+                {
+                    case 1:
+                        s = new Undergraduate();
+                        Console.Write("Enter Name : ");
+                        s.Name = Console.ReadLine();
+                        Console.Write("Enter Student Id : ");
+                        s.StudetnId = int.Parse(Console.ReadLine());
+                        Console.Write("Enter Grade : ");
+                        s.Grade = float.Parse(Console.ReadLine());
+                        Console.WriteLine("Pass : "+s.IsPassed(s.Grade));
+                        break;
+                    case 2:
+                        s = new Graduate();
+                        Console.Write("Enter Name : ");
+                        s.Name = Console.ReadLine();
+                        Console.Write("Enter Student Id : ");
+                        s.StudetnId = int.Parse(Console.ReadLine());
+                        Console.Write("Enter Grade : ");
+                        s.Grade = float.Parse(Console.ReadLine());
+                        Console.WriteLine("Status : " + s.IsPassed(s.Grade));
+                        break;
+                    default:
+                        break;
+                }
+            } while (ch < 3);
+        }
+    }
+}
+
+2.using System;
+
+namespace TrainTicketBooking
+{
+    class UserDefinedException : ApplicationException
+    {
+        public UserDefinedException(string msg) : base(msg)
+        {
+
+        }
+    }
+    class Passanger
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public void TicketBooking(int NoOFTicket)
+        {
+            if(NoOFTicket > 2)
+            {
+                throw new UserDefinedException("cannot book more than 2 tickets");
+            }
+            else
+            {
+                Console.WriteLine("------------------------------");
+                Console.WriteLine("Name : "+Name);
+                Console.WriteLine("Age : "+Age);
+                Console.WriteLine("Number of Ticket : "+NoOFTicket);
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Passanger p = new Passanger();
+            Console.Write("Enter Name : ");
+            p.Name = Console.ReadLine();
+            Console.Write("Enter Age : ");
+            p.Age = int.Parse(Console.ReadLine());
+            Console.Write("Enter No Of Ticket : ");
+            int ticket = int.Parse(Console.ReadLine());
+            try
+            {
+                p.TicketBooking(ticket);
+            }
+            catch(UserDefinedException ude)
+            {
+                Console.WriteLine(ude.Message);
+            }
+            Console.Read();
+        }
+    }
+}
+
+3.using System;
+
+namespace LibraryProject
+{
+    public class Concession
+    {
+        const int TotalFare = 500;
+        public void CalculateConcession(int age)
+        {
+            if(age <= 5)
+            {
+                Console.WriteLine("Little Champs- Free Ticket");
+            }
+            else if(age > 60)
+            {
+                Console.WriteLine("Senior Citizen totalfare : Rs=" +(TotalFare - ((TotalFare * 30) / 100)));
+            }
+            else
+            {
+                Console.WriteLine("Print Ticket Booked : Rs="+TotalFare);
+            }
+        }
+    }
+}
+
+***********************************************************************************
+using System;
+using LibraryProject;
+
+namespace LibraryProjectDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Name;
+            int Age;
+            Console.Write("Enter Name : ");
+            Name = Console.ReadLine();
+            Console.Write("Enter Age : ");
+            Age = int.Parse(Console.ReadLine());
+            Concession c = new Concession();
+            Console.WriteLine("------------------------");
+            Console.WriteLine("Name : "+Name);
+            Console.WriteLine("Age : "+Age);
+            c.CalculateConcession(Age);
+            Console.ReadLine();
+        }
+    }
+}
+
+4.using System;
+
+namespace StudentInterface
+{
+    interface IStudent
+    {
+        int StudentId { get; set; }
+        string Name { get; set; }
+        void ShowDetails();
+    }
+    class Dayscholar : IStudent
+    {
+        public int StudentId { get; set; }
+        public string Name { get; set; }
+        public void ShowDetails()
+        {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("*** Dayscholar details ***");
+            Console.WriteLine("Student Id : "+StudentId);
+            Console.WriteLine("Name : "+Name);
+        }
+    }
+    class Resident : IStudent
+    {
+        public int StudentId { get; set; }
+        public string Name { get; set; }
+        public void ShowDetails()
+        {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("*** Residental details ***");
+            Console.WriteLine("Student Id : " + StudentId);
+            Console.WriteLine("Name : " + Name);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IStudent s;
+            Console.WriteLine("Enter Dayscholar details ");
+            s = new Dayscholar();
+            Console.Write("Enter Student Id : ");
+            s.StudentId = int.Parse(Console.ReadLine());
+            Console.Write("Enter Name : ");
+            s.Name = Console.ReadLine();
+            s.ShowDetails();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Enter Resident details ");
+            s = new Resident();
+            Console.Write("Enter Student Id : ");
+            s.StudentId = int.Parse(Console.ReadLine());
+            Console.Write("Enter Name : ");
+            s.Name = Console.ReadLine();
+            s.ShowDetails();
+            Console.Read();
+        }
+    }
+}
+------------------------------------------------------------------------------
